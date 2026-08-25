@@ -13,9 +13,6 @@
     "security": [
         {
             "http": []
-        },
-        {
-            "http": []
         }
     ],
     "paths": {
@@ -823,7 +820,8 @@
                 "properties": {
                     "email": {
                         "type": "string",
-                        "format": "email"
+                        "format": "email",
+                        "maxLength": 255
                     },
                     "password": {
                         "type": "string"
@@ -895,6 +893,8 @@
                 "properties": {
                     "name": {
                         "type": "string",
+                        "pattern": "^[\\p{L}\\p{M}\\s'\\-\\.]+$",
+                        "minLength": 2,
                         "maxLength": 255
                     },
                     "email": {
@@ -922,13 +922,15 @@
                 "properties": {
                     "name": {
                         "type": "string",
+                        "minLength": 2,
                         "maxLength": 255
                     },
                     "description": {
                         "type": [
                             "string",
                             "null"
-                        ]
+                        ],
+                        "maxLength": 5000
                     },
                     "status": {
                         "$ref": "#/components/schemas/ProjectStatus"
@@ -944,13 +946,15 @@
                 "properties": {
                     "title": {
                         "type": "string",
+                        "minLength": 2,
                         "maxLength": 255
                     },
                     "description": {
                         "type": [
                             "string",
                             "null"
-                        ]
+                        ],
+                        "maxLength": 5000
                     },
                     "priority": {
                         "$ref": "#/components/schemas/TaskPriority"
@@ -1048,13 +1052,15 @@
                 "properties": {
                     "name": {
                         "type": "string",
+                        "minLength": 2,
                         "maxLength": 255
                     },
                     "description": {
                         "type": [
                             "string",
                             "null"
-                        ]
+                        ],
+                        "maxLength": 5000
                     },
                     "status": {
                         "$ref": "#/components/schemas/ProjectStatus"
@@ -1067,13 +1073,15 @@
                 "properties": {
                     "title": {
                         "type": "string",
+                        "minLength": 2,
                         "maxLength": 255
                     },
                     "description": {
                         "type": [
                             "string",
                             "null"
-                        ]
+                        ],
+                        "maxLength": 5000
                     },
                     "priority": {
                         "$ref": "#/components/schemas/TaskPriority"
