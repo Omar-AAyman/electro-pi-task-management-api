@@ -45,7 +45,7 @@ class RateLimitTest extends TestCase
     {
         for ($i = 0; $i < 3; $i++) {
             $this->postJson('/api/register', [
-                'name' => "User {$i}",
+                'name' => ['Alice', 'Bob', 'Carol'][$i],
                 'email' => "user{$i}@example.com",
                 'password' => 'password',
                 'password_confirmation' => 'password',
