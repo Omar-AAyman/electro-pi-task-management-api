@@ -2,21 +2,29 @@
 
 namespace App\Providers;
 
+use App\Repositories\Contracts\ProjectRepositoryInterface;
+use App\Repositories\Eloquent\ProjectRepository;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        //
+        $this->app->bind(ProjectRepositoryInterface::class, ProjectRepository::class);
     }
 
     public function boot(): void
     {
         $this->configureRateLimiting();
+
+        Route::bind('project', function (string $value) {
+            return app(ProjectRepositoryInterface::class)
+                ->findForUser(auth()->user(), $value);
+        });
     }
 
     private function configureRateLimiting(): void
