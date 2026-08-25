@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Repositories\Contracts\ProjectRepositoryInterface;
+use App\Repositories\Contracts\TaskRepositoryInterface;
 use App\Repositories\Eloquent\ProjectRepository;
+use App\Repositories\Eloquent\TaskRepository;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
@@ -15,6 +17,7 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind(ProjectRepositoryInterface::class, ProjectRepository::class);
+        $this->app->bind(TaskRepositoryInterface::class, TaskRepository::class);
     }
 
     public function boot(): void
@@ -23,6 +26,11 @@ class AppServiceProvider extends ServiceProvider
 
         Route::bind('project', function (string $value) {
             return app(ProjectRepositoryInterface::class)
+                ->findForUser(auth()->user(), $value);
+        });
+
+        Route::bind('task', function (string $value) {
+            return app(TaskRepositoryInterface::class)
                 ->findForUser(auth()->user(), $value);
         });
     }
